@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(); // Pastikan ini ada
-            $table->foreignId('room_id')->constrained();
+            $table->foreignId('user_id')->constrained('users'); // Tambahkan nama tabel disini
+            $table->foreignId('room_id')->constrained('rooms'); // Tambahkan nama tabel disini
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('guests');
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

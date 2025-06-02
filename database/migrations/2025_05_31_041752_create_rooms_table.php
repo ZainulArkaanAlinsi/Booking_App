@@ -9,17 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained();
-            $table->foreignId('room_type_id')->constrained();
+            $table->foreignId('hotel_id')->constrained('hotels');
+            $table->foreignId('room_type_id')->constrained('room_types');
             $table->string('room_number');
-            $table->decimal('price', 10, 2);
-            $table->integer('max_guests');
-            $table->boolean('is_available')->default(true);
-            $table->text('description');
+            $table->decimal('price_per_night', 10, 2);
             $table->timestamps();
         });
     }
