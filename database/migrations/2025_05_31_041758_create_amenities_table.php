@@ -9,13 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('icon')->nullable();
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

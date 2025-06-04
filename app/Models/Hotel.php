@@ -2,35 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Hotel extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
+        'description',
         'address',
         'city',
         'country',
-        'phone',
-        'email',
-        'star_rating',
-        'description'
+        'rating'
     ];
 
-    public function rooms(): HasMany
+    public function rooms()
     {
         return $this->hasMany(Room::class);
-    }
-
-    public function reviews(): HasMany
-    {
-        return $this->hasMany(Review::class);
-    }
-
-    public function coverImage(): HasOne
-    {
-        return $this->hasOne(RoomImage::class)->where('is_cover', true);
     }
 }

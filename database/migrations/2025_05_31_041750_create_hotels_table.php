@@ -9,18 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('address');
+            $table->text('description');
+            $table->string('address');
             $table->string('city');
             $table->string('country');
-            $table->string('phone');
-            $table->string('email');
-            $table->integer('star_rating');
-            $table->text('description');
+            $table->decimal('rating', 3, 1)->default(0);
             $table->timestamps();
         });
     }

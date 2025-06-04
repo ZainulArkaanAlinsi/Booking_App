@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained('hotels');
-            $table->foreignId('room_type_id')->constrained('room_types');
-            $table->string('room_number');
-            $table->decimal('price_per_night', 10, 2);
+            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+            $table->foreignId('room_type_id')->constrained()->onDelete('cascade');
+            $table->string('room_number')->unique();
+            $table->text('features')->nullable();
             $table->timestamps();
         });
     }

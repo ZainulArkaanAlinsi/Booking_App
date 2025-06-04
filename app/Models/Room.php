@@ -2,67 +2,37 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Room extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'hotel_id',
         'room_type_id',
         'room_number',
-        'price',
-        'max_guests',
-        'is_available',
-        'description'
+        'features'
     ];
 
-    public function hotel(): BelongsTo
+    public function hotel()
     {
         return $this->belongsTo(Hotel::class);
     }
 
-    public function roomType(): BelongsTo
+    public function roomType()
     {
         return $this->belongsTo(RoomType::class);
     }
 
-    public function images(): HasMany
+    public function amenities()
     {
-        return $this->hasMany(RoomImage::class);
+        return $this->belongsToMany(Amenity::class, 'room_amenity');
     }
 
-    public function coverImage(): HasOne
-    {
-        return $this->hasOne(RoomImage::class)->where('is_cover', true);
-    }
-
-    public function amenities(): BelongsToMany
-    {
-        return $this->belongsToMany(Amenity::class, 'room_amenities');
-    }
-
-    public function bookings(): HasMany
+    public function bookings()
     {
         return $this->hasMany(Booking::class);
-    }
-
-    public function seasonalPrices(): HasMany
-    {
-        return $this->hasMany(SeasonalPrice::class);
-    }
-
-    public function getCurrentPriceAttribute()
-    {
-        $today = now()->format('Y-m-d');
-        $seasonalPrice = $this->seasonalPrices()
-            ->where('start_date', '<=', $today)
-            ->where('end_date', '>=', $today)
-            ->first();
-
-        return $seasonalPrice ? $seasonalPrice->adjusted_price : $this->price;
     }
 }

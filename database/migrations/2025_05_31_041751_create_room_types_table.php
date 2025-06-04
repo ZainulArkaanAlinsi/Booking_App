@@ -9,12 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('room_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->decimal('base_price', 10, 2);
             $table->timestamps();
         });
     }
