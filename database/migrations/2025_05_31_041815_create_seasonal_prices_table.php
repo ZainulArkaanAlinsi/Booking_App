@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seasonal_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_id')->constrained();
+            $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('adjusted_price', 10, 2);

@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('room_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->decimal('base_price', 10, 2);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

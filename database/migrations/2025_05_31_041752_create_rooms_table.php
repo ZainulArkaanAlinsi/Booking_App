@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
+        // create_rooms_table.php
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
             $table->foreignId('room_type_id')->constrained()->onDelete('cascade');
-            $table->string('room_number')->unique();
-            $table->text('features')->nullable();
+            $table->string('room_number');
+            $table->decimal('price', 10, 2);
+            $table->integer('max_guests');
+            $table->boolean('is_available')->default(true);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

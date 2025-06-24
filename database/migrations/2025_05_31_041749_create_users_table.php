@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->text('address')->nullable();
-            $table->rememberToken();
+            $table->string('role')->default('user'); // admin, user, etc
             $table->timestamps();
         });
     }
