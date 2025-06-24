@@ -14,4 +14,8 @@ class RoomType extends Model
     {
         return $this->hasMany(Room::class);
     }
+    public function getRoomCountAttribute()
+    {
+        return $this->rooms()->count();
+    }
 }
