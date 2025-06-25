@@ -8,10 +8,5 @@ use App\Models\Room;
 
 class SeasonalPrice extends Model
 {
-    use HasFactory;
-
-    public function room()
-    {
-        return $this->belongsTo(Room::class);
-    }
+    //
 }

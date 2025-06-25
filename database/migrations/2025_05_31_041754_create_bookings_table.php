@@ -18,8 +18,7 @@ return new class extends Migration
             $table->date('check_in');
             $table->date('check_out');
             $table->integer('guests');
-            $table->string('status'); // pending, confirmed, canceled
-            $table->decimal('total_price', 12, 2);
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

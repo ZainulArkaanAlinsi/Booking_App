@@ -10,18 +10,14 @@ use App\Models\Payment;
 
 class Booking extends Model
 {
-    use HasFactory;
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
     public function room()
     {
         return $this->belongsTo(Room::class);
     }
-
     public function payment()
     {
         return $this->hasOne(Payment::class);
