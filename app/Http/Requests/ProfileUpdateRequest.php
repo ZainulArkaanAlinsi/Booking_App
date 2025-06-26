@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -21,35 +21,29 @@ class ProfileUpdateRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'lowercase',
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            'profile_photo' => ['nullable', 'image', 'max:2048'], // gambar opsional max 2MB
+            'profile_photo' => [
+                'nullable',
+                File::types(['jpg', 'jpeg', 'png'])
+                    ->max(2048), // 2MB
+            ],
         ];
     }
 
-    public function update()
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
     {
-        $user = $this->user();
-
-        $data = $this->validated();
-
-        if ($this->hasFile('profile_photo')) {
-            // Hapus gambar lama jika ada
-            if ($user->profile_photo_path && Storage::disk('public')->exists($user->profile_photo_path)) {
-                Storage::disk('public')->delete($user->profile_photo_path);
-            }
-
-            // Simpan gambar baru ke storage/public/profile-photos
-            $path = $this->file('profile_photo')->store('profile-photos', 'public');
-
-            $data['profile_photo_path'] = $path;
-        }
-
-        $user->update($data);
-
-        return back()->with('status', 'profile-updated');
+        return [
+            'profile_photo.image' => 'The file must be an image (JPG, JPEG, PNG).',
+            'profile_photo.mimes' => 'Only JPG, JPEG, and PNG formats are supported.',
+            'profile_photo.max' => 'The image may not be larger than 2MB.',
+        ];
     }
 }
