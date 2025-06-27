@@ -3,10 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Room;
 
 class SeasonalPrice extends Model
 {
-    //
+    protected $fillable = [
+        'room_id',
+        'start_date',
+        'end_date',
+        'adjusted_price'
+    ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

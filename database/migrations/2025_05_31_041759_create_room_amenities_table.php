@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->foreignId('amenity_id')->constrained()->onDelete('cascade');
+            $table->primary(['room_id', 'amenity_id']);
             $table->timestamps();
         });
     }

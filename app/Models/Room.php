@@ -2,12 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\RoomImage;
 
 
 class Room extends Model
 {
+
+
+    protected $fillable = [
+        'hotel_id',
+        'room_type_id',
+        'room_number',
+        'price',
+        'max_guests',
+        'is_available',
+        'description'
+    ];
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
@@ -24,8 +35,8 @@ class Room extends Model
     {
         return $this->hasMany(RoomImage::class);
     }
-    public function bookings()
+    public function seasonalPrices()
     {
-        return $this->hasMany(Booking::class);
+        return $this->hasMany(SeasonalPrice::class);
     }
 }
